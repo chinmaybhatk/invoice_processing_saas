@@ -1,0 +1,382 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:JOB-{####}",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "job_details_section",
+  "job_id",
+  "customer",
+  "processing_status",
+  "column_break_4",
+  "started_at",
+  "completed_at",
+  "processing_time",
+  "file_information_section",
+  "file_name",
+  "file_id",
+  "file_url",
+  "column_break_10",
+  "file_size",
+  "file_type",
+  "processing_metadata_section",
+  "extraction_engine",
+  "complexity_score",
+  "quality_score",
+  "column_break_16",
+  "validation_status",
+  "confidence_score",
+  "billable",
+  "invoice_data_section",
+  "vendor_name",
+  "vendor_address",
+  "vendor_tax_id",
+  "column_break_22",
+  "invoice_number",
+  "invoice_date",
+  "due_date",
+  "amounts_section",
+  "total_amount",
+  "tax_amount",
+  "subtotal_amount",
+  "column_break_28",
+  "currency_code",
+  "payment_terms",
+  "po_number",
+  "accounting_integration_section",
+  "accounting_import_status",
+  "accounting_import_id",
+  "column_break_33",
+  "retry_count",
+  "error_handling_section",
+  "error_message",
+  "validation_errors",
+  "raw_data_section",
+  "extracted_data",
+  "line_items_data",
+  "line_items_count"
+ ],
+ "fields": [
+  {
+   "fieldname": "job_details_section",
+   "fieldtype": "Section Break",
+   "label": "Job Details"
+  },
+  {
+   "fieldname": "job_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Job ID",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "SaaS Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Processing Status",
+   "options": "Queued\\nProcessing\\nCompleted\\nFailed\\nRetry",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "started_at",
+   "fieldtype": "Datetime",
+   "label": "Started At"
+  },
+  {
+   "fieldname": "completed_at",
+   "fieldtype": "Datetime",
+   "label": "Completed At"
+  },
+  {
+   "fieldname": "processing_time",
+   "fieldtype": "Int",
+   "label": "Processing Time (seconds)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "file_information_section",
+   "fieldtype": "Section Break",
+   "label": "File Information"
+  },
+  {
+   "fieldname": "file_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "File Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "file_id",
+   "fieldtype": "Data",
+   "label": "Google Drive File ID"
+  },
+  {
+   "fieldname": "file_url",
+   "fieldtype": "Data",
+   "label": "File URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "file_size",
+   "fieldtype": "Int",
+   "label": "File Size (bytes)"
+  },
+  {
+   "fieldname": "file_type",
+   "fieldtype": "Data",
+   "label": "File Type"
+  },
+  {
+   "fieldname": "processing_metadata_section",
+   "fieldtype": "Section Break",
+   "label": "Processing Metadata"
+  },
+  {
+   "fieldname": "extraction_engine",
+   "fieldtype": "Select",
+   "label": "Extraction Engine",
+   "options": "OpenAI\\nAzure\\nManual"
+  },
+  {
+   "fieldname": "complexity_score",
+   "fieldtype": "Float",
+   "label": "Complexity Score",
+   "precision": 2
+  },
+  {
+   "fieldname": "quality_score",
+   "fieldtype": "Float",
+   "label": "Quality Score",
+   "precision": 2
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "validation_status",
+   "fieldtype": "Select",
+   "label": "Validation Status",
+   "options": "Valid\\nInvalid\\nNeeds Review"
+  },
+  {
+   "fieldname": "confidence_score",
+   "fieldtype": "Float",
+   "label": "Confidence Score",
+   "precision": 2
+  },
+  {
+   "fieldname": "billable",
+   "fieldtype": "Check",
+   "label": "Billable",
+   "default": 1
+  },
+  {
+   "fieldname": "invoice_data_section",
+   "fieldtype": "Section Break",
+   "label": "Extracted Invoice Data"
+  },
+  {
+   "fieldname": "vendor_name",
+   "fieldtype": "Data",
+   "label": "Vendor Name"
+  },
+  {
+   "fieldname": "vendor_address",
+   "fieldtype": "Small Text",
+   "label": "Vendor Address"
+  },
+  {
+   "fieldname": "vendor_tax_id",
+   "fieldtype": "Data",
+   "label": "Vendor Tax ID"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_number",
+   "fieldtype": "Data",
+   "label": "Invoice Number"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "label": "Invoice Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "amounts_section",
+   "fieldtype": "Section Break",
+   "label": "Amounts"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount"
+  },
+  {
+   "fieldname": "subtotal_amount",
+   "fieldtype": "Currency",
+   "label": "Subtotal Amount"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency_code",
+   "fieldtype": "Data",
+   "label": "Currency Code",
+   "default": "USD"
+  },
+  {
+   "fieldname": "payment_terms",
+   "fieldtype": "Data",
+   "label": "Payment Terms"
+  },
+  {
+   "fieldname": "po_number",
+   "fieldtype": "Data",
+   "label": "PO Number"
+  },
+  {
+   "fieldname": "accounting_integration_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Integration"
+  },
+  {
+   "fieldname": "accounting_import_status",
+   "fieldtype": "Select",
+   "label": "Accounting Import Status",
+   "options": "Pending\\nImported\\nFailed\\nSkipped"
+  },
+  {
+   "fieldname": "accounting_import_id",
+   "fieldtype": "Data",
+   "label": "Accounting System ID"
+  },
+  {
+   "fieldname": "column_break_33",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "retry_count",
+   "fieldtype": "Int",
+   "label": "Retry Count",
+   "default": 0
+  },
+  {
+   "fieldname": "error_handling_section",
+   "fieldtype": "Section Break",
+   "label": "Error Handling"
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Long Text",
+   "label": "Error Message"
+  },
+  {
+   "fieldname": "validation_errors",
+   "fieldtype": "Long Text",
+   "label": "Validation Errors"
+  },
+  {
+   "fieldname": "raw_data_section",
+   "fieldtype": "Section Break",
+   "label": "Raw Data",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "extracted_data",
+   "fieldtype": "JSON",
+   "label": "Extracted Data (JSON)"
+  },
+  {
+   "fieldname": "line_items_data",
+   "fieldtype": "JSON",
+   "label": "Line Items Data (JSON)"
+  },
+  {
+   "fieldname": "line_items_count",
+   "fieldtype": "Int",
+   "label": "Line Items Count",
+   "read_only": 1
+  }
+ ],
+ "icon": "fa fa-cog",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "Processing Job",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "file_name",
+ "track_changes": 1
+}
