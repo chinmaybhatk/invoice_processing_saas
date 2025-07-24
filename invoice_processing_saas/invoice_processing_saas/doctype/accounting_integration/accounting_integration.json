@@ -1,0 +1,302 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:ACC-{customer}-{####}",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "integration_details_section",
+  "customer",
+  "accounting_system",
+  "integration_status",
+  "column_break_4",
+  "setup_completed",
+  "last_sync",
+  "api_credentials_section",
+  "client_id",
+  "client_secret",
+  "access_token",
+  "column_break_9",
+  "refresh_token",
+  "company_id",
+  "base_url",
+  "mapping_settings_section",
+  "default_account",
+  "tax_account",
+  "vendor_creation_mode",
+  "column_break_16",
+  "approval_required",
+  "export_format",
+  "auto_sync",
+  "sync_configuration_section",
+  "sync_frequency",
+  "last_successful_sync",
+  "sync_errors",
+  "column_break_22",
+  "total_exports",
+  "successful_exports",
+  "failed_exports",
+  "error_handling_section",
+  "error_message",
+  "retry_count",
+  "column_break_28",
+  "health_check_status",
+  "last_health_check"
+ ],
+ "fields": [
+  {
+   "fieldname": "integration_details_section",
+   "fieldtype": "Section Break",
+   "label": "Integration Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "SaaS Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "accounting_system",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Accounting System",
+   "options": "QuickBooks\nXero\nSage\nFreshBooks\nWave\nManual Export",
+   "reqd": 1
+  },
+  {
+   "fieldname": "integration_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Integration Status",
+   "options": "Connected\nDisconnected\nError\nSetup Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "setup_completed",
+   "fieldtype": "Check",
+   "label": "Setup Completed"
+  },
+  {
+   "fieldname": "last_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "api_credentials_section",
+   "fieldtype": "Section Break",
+   "label": "API Credentials"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Password",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "client_secret",
+   "fieldtype": "Password",
+   "label": "Client Secret"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "refresh_token",
+   "fieldtype": "Password",
+   "label": "Refresh Token"
+  },
+  {
+   "fieldname": "company_id",
+   "fieldtype": "Data",
+   "label": "Company ID"
+  },
+  {
+   "fieldname": "base_url",
+   "fieldtype": "Data",
+   "label": "Base URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "mapping_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Mapping Settings"
+  },
+  {
+   "fieldname": "default_account",
+   "fieldtype": "Data",
+   "label": "Default Expense Account"
+  },
+  {
+   "fieldname": "tax_account",
+   "fieldtype": "Data",
+   "label": "Default Tax Account"
+  },
+  {
+   "fieldname": "vendor_creation_mode",
+   "fieldtype": "Select",
+   "label": "Vendor Creation Mode",
+   "options": "Auto Create\nManual Review\nSkip"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approval_required",
+   "fieldtype": "Check",
+   "label": "Approval Required"
+  },
+  {
+   "fieldname": "export_format",
+   "fieldtype": "Select",
+   "label": "Export Format",
+   "options": "JSON\nCSV\nXML"
+  },
+  {
+   "fieldname": "auto_sync",
+   "fieldtype": "Check",
+   "label": "Auto Sync",
+   "default": 1
+  },
+  {
+   "fieldname": "sync_configuration_section",
+   "fieldtype": "Section Break",
+   "label": "Sync Configuration"
+  },
+  {
+   "fieldname": "sync_frequency",
+   "fieldtype": "Select",
+   "label": "Sync Frequency",
+   "options": "Immediate\nEvery 15 Minutes\nEvery Hour\nDaily",
+   "default": "Immediate"
+  },
+  {
+   "fieldname": "last_successful_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Successful Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sync_errors",
+   "fieldtype": "Long Text",
+   "label": "Sync Errors"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_exports",
+   "fieldtype": "Int",
+   "label": "Total Exports",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "successful_exports",
+   "fieldtype": "Int",
+   "label": "Successful Exports",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "failed_exports",
+   "fieldtype": "Int",
+   "label": "Failed Exports",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "error_handling_section",
+   "fieldtype": "Section Break",
+   "label": "Error Handling"
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Long Text",
+   "label": "Error Message"
+  },
+  {
+   "fieldname": "retry_count",
+   "fieldtype": "Int",
+   "label": "Retry Count",
+   "default": 0
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "health_check_status",
+   "fieldtype": "Select",
+   "label": "Health Check Status",
+   "options": "Healthy\nWarning\nCritical\nUnknown",
+   "default": "Unknown"
+  },
+  {
+   "fieldname": "last_health_check",
+   "fieldtype": "Datetime",
+   "label": "Last Health Check"
+  }
+ ],
+ "icon": "fa fa-calculator",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "Accounting Integration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Customer",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "accounting_system",
+ "track_changes": 1
+}
