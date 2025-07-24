@@ -1,0 +1,315 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:CUST-{####}",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_details_section",
+  "customer_name",
+  "email",
+  "phone",
+  "company_address",
+  "column_break_5",
+  "website",
+  "industry",
+  "company_size",
+  "subscription_section",
+  "subscription_plan",
+  "subscription_status",
+  "subscription_start_date",
+  "subscription_end_date",
+  "column_break_11",
+  "trial_end_date",
+  "auto_renewal",
+  "billing_cycle",
+  "usage_section",
+  "current_usage",
+  "usage_limit",
+  "overage_allowed",
+  "column_break_17",
+  "total_processed",
+  "lifetime_value",
+  "integration_section",
+  "onboarding_status",
+  "api_key",
+  "webhook_secret",
+  "column_break_22",
+  "created_by_webform",
+  "setup_completed",
+  "last_activity",
+  "notes_section",
+  "notes",
+  "internal_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email",
+   "options": "Email",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "company_address",
+   "fieldtype": "Small Text",
+   "label": "Company Address"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "options": "URL"
+  },
+  {
+   "fieldname": "industry",
+   "fieldtype": "Data",
+   "label": "Industry"
+  },
+  {
+   "fieldname": "company_size",
+   "fieldtype": "Select",
+   "label": "Company Size",
+   "options": "1-10 employees\\n11-50 employees\\n51-200 employees\\n201-1000 employees\\n1000+ employees"
+  },
+  {
+   "fieldname": "subscription_section",
+   "fieldtype": "Section Break",
+   "label": "Subscription Details"
+  },
+  {
+   "fieldname": "subscription_plan",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Subscription Plan",
+   "options": "Subscription Plan",
+   "reqd": 1
+  },
+  {
+   "fieldname": "subscription_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Subscription Status",
+   "options": "Active\\nTrial\\nSuspended\\nCancelled\\nExpired",
+   "reqd": 1
+  },
+  {
+   "fieldname": "subscription_start_date",
+   "fieldtype": "Date",
+   "label": "Subscription Start Date"
+  },
+  {
+   "fieldname": "subscription_end_date",
+   "fieldtype": "Date",
+   "label": "Subscription End Date"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "trial_end_date",
+   "fieldtype": "Date",
+   "label": "Trial End Date"
+  },
+  {
+   "fieldname": "auto_renewal",
+   "fieldtype": "Check",
+   "label": "Auto Renewal"
+  },
+  {
+   "fieldname": "billing_cycle",
+   "fieldtype": "Select",
+   "label": "Billing Cycle",
+   "options": "Monthly\\nAnnual"
+  },
+  {
+   "fieldname": "usage_section",
+   "fieldtype": "Section Break",
+   "label": "Usage Tracking"
+  },
+  {
+   "fieldname": "current_usage",
+   "fieldtype": "Int",
+   "label": "Current Month Usage",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "usage_limit",
+   "fieldtype": "Int",
+   "label": "Monthly Usage Limit",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "overage_allowed",
+   "fieldtype": "Check",
+   "label": "Overage Allowed"
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_processed",
+   "fieldtype": "Int",
+   "label": "Total Processed (Lifetime)",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "lifetime_value",
+   "fieldtype": "Currency",
+   "label": "Lifetime Value",
+   "read_only": 1
+  },
+  {
+   "fieldname": "integration_section",
+   "fieldtype": "Section Break",
+   "label": "Integration & Setup"
+  },
+  {
+   "fieldname": "onboarding_status",
+   "fieldtype": "Select",
+   "label": "Onboarding Status",
+   "options": "Pending\\nIn Progress\\nCompleted\\nFailed"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key",
+   "read_only": 1
+  },
+  {
+   "fieldname": "webhook_secret",
+   "fieldtype": "Password",
+   "label": "Webhook Secret",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "created_by_webform",
+   "fieldtype": "Check",
+   "label": "Created by Web Form",
+   "read_only": 1
+  },
+  {
+   "fieldname": "setup_completed",
+   "fieldtype": "Check",
+   "label": "Setup Completed"
+  },
+  {
+   "fieldname": "last_activity",
+   "fieldtype": "Datetime",
+   "label": "Last Activity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Customer Notes"
+  },
+  {
+   "fieldname": "internal_notes",
+   "fieldtype": "Text Editor",
+   "label": "Internal Notes"
+  }
+ ],
+ "icon": "fa fa-user",
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Drive Integration",
+   "link_fieldname": "customer"
+  },
+  {
+   "link_doctype": "Accounting Integration",
+   "link_fieldname": "customer"
+  },
+  {
+   "link_doctype": "Processing Job",
+   "link_fieldname": "customer"
+  },
+  {
+   "link_doctype": "Usage Tracking",
+   "link_fieldname": "customer"
+  }
+ ],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "SaaS Customer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_name",
+ "track_changes": 1
+}
