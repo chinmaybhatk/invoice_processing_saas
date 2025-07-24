@@ -1,0 +1,230 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:plan_code",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "plan_details_section",
+  "plan_name",
+  "plan_code",
+  "description",
+  "column_break_4",
+  "is_active",
+  "sort_order",
+  "feature_highlight",
+  "pricing_section",
+  "monthly_price",
+  "annual_price",
+  "annual_discount_percent",
+  "column_break_10",
+  "processing_limit",
+  "overage_rate",
+  "trial_days",
+  "features_section",
+  "plan_features",
+  "limits_section",
+  "api_access",
+  "priority_support",
+  "custom_integrations",
+  "column_break_18",
+  "max_file_size_mb",
+  "retention_days",
+  "concurrent_processing"
+ ],
+ "fields": [
+  {
+   "fieldname": "plan_details_section",
+   "fieldtype": "Section Break",
+   "label": "Plan Details"
+  },
+  {
+   "fieldname": "plan_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Plan Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plan_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Plan Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "default": 1
+  },
+  {
+   "fieldname": "sort_order",
+   "fieldtype": "Int",
+   "label": "Sort Order",
+   "default": 10
+  },
+  {
+   "fieldname": "feature_highlight",
+   "fieldtype": "Data",
+   "label": "Feature Highlight"
+  },
+  {
+   "fieldname": "pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Pricing"
+  },
+  {
+   "fieldname": "monthly_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Price",
+   "reqd": 1
+  },
+  {
+   "fieldname": "annual_price",
+   "fieldtype": "Currency",
+   "label": "Annual Price"
+  },
+  {
+   "fieldname": "annual_discount_percent",
+   "fieldtype": "Percent",
+   "label": "Annual Discount %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "processing_limit",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Monthly Processing Limit",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "overage_rate",
+   "fieldtype": "Currency",
+   "label": "Overage Rate (per processing)"
+  },
+  {
+   "fieldname": "trial_days",
+   "fieldtype": "Int",
+   "label": "Trial Days",
+   "default": 14
+  },
+  {
+   "fieldname": "features_section",
+   "fieldtype": "Section Break",
+   "label": "Features"
+  },
+  {
+   "fieldname": "plan_features",
+   "fieldtype": "Table",
+   "label": "Plan Features",
+   "options": "Subscription Plan Feature"
+  },
+  {
+   "fieldname": "limits_section",
+   "fieldtype": "Section Break",
+   "label": "Limits & Access"
+  },
+  {
+   "fieldname": "api_access",
+   "fieldtype": "Check",
+   "label": "API Access"
+  },
+  {
+   "fieldname": "priority_support",
+   "fieldtype": "Check",
+   "label": "Priority Support"
+  },
+  {
+   "fieldname": "custom_integrations",
+   "fieldtype": "Check",
+   "label": "Custom Integrations"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "max_file_size_mb",
+   "fieldtype": "Int",
+   "label": "Max File Size (MB)",
+   "default": 10
+  },
+  {
+   "fieldname": "retention_days",
+   "fieldtype": "Int",
+   "label": "Data Retention (Days)",
+   "default": 90
+  },
+  {
+   "fieldname": "concurrent_processing",
+   "fieldtype": "Int",
+   "label": "Concurrent Processing",
+   "default": 1
+  }
+ ],
+ "icon": "fa fa-credit-card",
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "SaaS Customer",
+   "link_fieldname": "subscription_plan"
+  }
+ ],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "Subscription Plan",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "share": 1
+  },
+  {
+   "read": 1,
+   "role": "Customer"
+  }
+ ],
+ "sort_field": "sort_order",
+ "sort_order": "ASC",
+ "states": [],
+ "title_field": "plan_name",
+ "track_changes": 1
+}
