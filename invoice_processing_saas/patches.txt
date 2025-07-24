@@ -1,0 +1,2 @@
+# Add any patches here
+# invoice_processing_saas.patches.v1_0.create_default_subscription_plans
