@@ -1,0 +1,310 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:DRV-{customer}-{####}",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "integration_details_section",
+  "customer",
+  "drive_folder_id",
+  "drive_folder_url",
+  "column_break_4",
+  "folder_name",
+  "integration_status",
+  "setup_completed",
+  "oauth_section",
+  "access_token",
+  "refresh_token",
+  "token_expiry",
+  "column_break_10",
+  "client_id",
+  "client_secret",
+  "auth_scope",
+  "sync_configuration_section",
+  "sync_frequency",
+  "last_sync",
+  "webhook_url",
+  "column_break_16",
+  "auto_processing",
+  "file_types_allowed",
+  "max_file_size_mb",
+  "monitoring_section",
+  "total_files_processed",
+  "successful_processing",
+  "failed_processing",
+  "column_break_22",
+  "first_connected",
+  "last_activity",
+  "error_handling_section",
+  "error_message",
+  "retry_count",
+  "column_break_27",
+  "health_check_status",
+  "last_health_check"
+ ],
+ "fields": [
+  {
+   "fieldname": "integration_details_section",
+   "fieldtype": "Section Break",
+   "label": "Integration Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "SaaS Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "drive_folder_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Google Drive Folder ID",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "drive_folder_url",
+   "fieldtype": "Data",
+   "label": "Drive Folder URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "folder_name",
+   "fieldtype": "Data",
+   "label": "Folder Name"
+  },
+  {
+   "fieldname": "integration_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Integration Status",
+   "options": "Active\\nInactive\\nError\\nSetup Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "setup_completed",
+   "fieldtype": "Check",
+   "label": "Setup Completed"
+  },
+  {
+   "fieldname": "oauth_section",
+   "fieldtype": "Section Break",
+   "label": "OAuth Configuration"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "fieldname": "refresh_token",
+   "fieldtype": "Password",
+   "label": "Refresh Token"
+  },
+  {
+   "fieldname": "token_expiry",
+   "fieldtype": "Datetime",
+   "label": "Token Expiry"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Password",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "client_secret",
+   "fieldtype": "Password",
+   "label": "Client Secret"
+  },
+  {
+   "fieldname": "auth_scope",
+   "fieldtype": "Data",
+   "label": "Auth Scope",
+   "default": "https://www.googleapis.com/auth/drive.readonly"
+  },
+  {
+   "fieldname": "sync_configuration_section",
+   "fieldtype": "Section Break",
+   "label": "Sync Configuration"
+  },
+  {
+   "fieldname": "sync_frequency",
+   "fieldtype": "Select",
+   "label": "Sync Frequency",
+   "options": "Every Minute\\nEvery 5 Minutes\\nEvery 15 Minutes\\nEvery 30 Minutes",
+   "default": "Every Minute"
+  },
+  {
+   "fieldname": "last_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "webhook_url",
+   "fieldtype": "Data",
+   "label": "Webhook URL",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auto_processing",
+   "fieldtype": "Check",
+   "label": "Auto Processing",
+   "default": 1
+  },
+  {
+   "fieldname": "file_types_allowed",
+   "fieldtype": "Table",
+   "label": "File Types Allowed",
+   "options": "Drive File Type"
+  },
+  {
+   "fieldname": "max_file_size_mb",
+   "fieldtype": "Int",
+   "label": "Max File Size (MB)",
+   "default": 10
+  },
+  {
+   "fieldname": "monitoring_section",
+   "fieldtype": "Section Break",
+   "label": "Monitoring & Statistics"
+  },
+  {
+   "fieldname": "total_files_processed",
+   "fieldtype": "Int",
+   "label": "Total Files Processed",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "successful_processing",
+   "fieldtype": "Int",
+   "label": "Successful Processing",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "failed_processing",
+   "fieldtype": "Int",
+   "label": "Failed Processing",
+   "read_only": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_connected",
+   "fieldtype": "Datetime",
+   "label": "First Connected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_activity",
+   "fieldtype": "Datetime",
+   "label": "Last Activity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_handling_section",
+   "fieldtype": "Section Break",
+   "label": "Error Handling"
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Long Text",
+   "label": "Error Message"
+  },
+  {
+   "fieldname": "retry_count",
+   "fieldtype": "Int",
+   "label": "Retry Count",
+   "default": 0
+  },
+  {
+   "fieldname": "column_break_27",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "health_check_status",
+   "fieldtype": "Select",
+   "label": "Health Check Status",
+   "options": "Healthy\\nWarning\\nCritical\\nUnknown",
+   "default": "Unknown"
+  },
+  {
+   "fieldname": "last_health_check",
+   "fieldtype": "Datetime",
+   "label": "Last Health Check"
+  }
+ ],
+ "icon": "fa fa-google",
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Processing Job",
+   "link_fieldname": "file_id"
+  }
+ ],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "Drive Integration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Customer",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "folder_name",
+ "track_changes": 1
+}
