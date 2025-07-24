@@ -1,0 +1,267 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{customer}-{month}",
+ "creation": "2025-01-24 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tracking_details_section",
+  "customer",
+  "month",
+  "plan_limit",
+  "column_break_4",
+  "reset_date",
+  "last_updated",
+  "billing_status",
+  "usage_counters_section",
+  "processed_count",
+  "successful_count",
+  "failed_count",
+  "column_break_10",
+  "overage_count",
+  "overage_charges",
+  "total_charges",
+  "engine_breakdown_section",
+  "openai_usage",
+  "azure_usage",
+  "manual_processing",
+  "column_break_16",
+  "avg_processing_time",
+  "avg_confidence_score",
+  "peak_usage_day",
+  "billing_section",
+  "invoice_generated",
+  "invoice_id",
+  "payment_status",
+  "column_break_22",
+  "invoice_date",
+  "due_date",
+  "paid_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "tracking_details_section",
+   "fieldtype": "Section Break",
+   "label": "Tracking Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "SaaS Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Month (YYYY-MM)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plan_limit",
+   "fieldtype": "Int",
+   "label": "Plan Limit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reset_date",
+   "fieldtype": "Date",
+   "label": "Reset Date"
+  },
+  {
+   "fieldname": "last_updated",
+   "fieldtype": "Datetime",
+   "label": "Last Updated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billing_status",
+   "fieldtype": "Select",
+   "label": "Billing Status",
+   "options": "Pending\nBilled\nPaid\nOverdue",
+   "default": "Pending"
+  },
+  {
+   "fieldname": "usage_counters_section",
+   "fieldtype": "Section Break",
+   "label": "Usage Counters"
+  },
+  {
+   "fieldname": "processed_count",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Processed Count",
+   "default": 0
+  },
+  {
+   "fieldname": "successful_count",
+   "fieldtype": "Int",
+   "label": "Successful Count",
+   "default": 0
+  },
+  {
+   "fieldname": "failed_count",
+   "fieldtype": "Int",
+   "label": "Failed Count",
+   "default": 0
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overage_count",
+   "fieldtype": "Int",
+   "label": "Overage Count",
+   "default": 0
+  },
+  {
+   "fieldname": "overage_charges",
+   "fieldtype": "Currency",
+   "label": "Overage Charges",
+   "default": 0
+  },
+  {
+   "fieldname": "total_charges",
+   "fieldtype": "Currency",
+   "label": "Total Charges",
+   "read_only": 1
+  },
+  {
+   "fieldname": "engine_breakdown_section",
+   "fieldtype": "Section Break",
+   "label": "Engine Breakdown"
+  },
+  {
+   "fieldname": "openai_usage",
+   "fieldtype": "Int",
+   "label": "OpenAI Usage",
+   "default": 0
+  },
+  {
+   "fieldname": "azure_usage",
+   "fieldtype": "Int",
+   "label": "Azure Usage",
+   "default": 0
+  },
+  {
+   "fieldname": "manual_processing",
+   "fieldtype": "Int",
+   "label": "Manual Processing",
+   "default": 0
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "avg_processing_time",
+   "fieldtype": "Float",
+   "label": "Avg Processing Time (seconds)",
+   "precision": 2
+  },
+  {
+   "fieldname": "avg_confidence_score",
+   "fieldtype": "Float",
+   "label": "Avg Confidence Score",
+   "precision": 2
+  },
+  {
+   "fieldname": "peak_usage_day",
+   "fieldtype": "Date",
+   "label": "Peak Usage Day"
+  },
+  {
+   "fieldname": "billing_section",
+   "fieldtype": "Section Break",
+   "label": "Billing Information"
+  },
+  {
+   "fieldname": "invoice_generated",
+   "fieldtype": "Check",
+   "label": "Invoice Generated"
+  },
+  {
+   "fieldname": "invoice_id",
+   "fieldtype": "Data",
+   "label": "Invoice ID"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Pending\nPaid\nFailed\nRefunded"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "label": "Invoice Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "paid_date",
+   "fieldtype": "Date",
+   "label": "Paid Date"
+  }
+ ],
+ "icon": "fa fa-bar-chart",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Invoice Processing SaaS",
+ "name": "Usage Tracking",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer Support",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Customer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "month",
+ "track_changes": 1
+}
