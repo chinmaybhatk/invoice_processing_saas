@@ -115,4 +115,167 @@ class SaaSCustomer(Document):
 		"""Check if customer has available quota"""
 		if self.current_usage >= self.usage_limit:
 			if not self.overage_allowed:
-				frappe.throw("Monthly processing quota exceeded. Please upgrade your plan.")\n			return False\n		return True\n		\n	def increment_usage(self):\n		\"\"\"Increment current usage counter\"\"\"\n		self.current_usage = (self.current_usage or 0) + 1\n		self.total_processed = (self.total_processed or 0) + 1\n		self.last_activity = frappe.utils.now()\n		self.save(ignore_permissions=True)\n		\n		# Check if approaching limit\n		usage_percentage = (self.current_usage / self.usage_limit) * 100\n		if usage_percentage >= 80 and usage_percentage < 85:\n			self.send_usage_warning(80)\n		elif usage_percentage >= 90 and usage_percentage < 95:\n			self.send_usage_warning(90)\n		elif usage_percentage >= 100:\n			self.send_usage_warning(100)\n			\n	def send_usage_warning(self, percentage):\n		\"\"\"Send usage warning email\"\"\"\n		try:\n			subject = f\"Usage Alert: {percentage}% of quota used\"\n			if percentage >= 100:\n				subject = \"Quota Exceeded - Action Required\"\n				\n			frappe.sendmail(\n				recipients=[self.email],\n				subject=subject,\n				template=\"usage_warning\",\n				args={\n					\"customer_name\": self.customer_name,\n					\"current_usage\": self.current_usage,\n					\"usage_limit\": self.usage_limit,\n					\"percentage\": percentage,\n					\"upgrade_url\": f\"{frappe.utils.get_url()}/billing\"\n				}\n			)\n		except Exception as e:\n			frappe.log_error(f\"Failed to send usage warning to {self.email}: {str(e)}\")\n			\n	def reset_monthly_usage(self):\n		\"\"\"Reset monthly usage counter (called by scheduled job)\"\"\"\n		self.current_usage = 0\n		self.save(ignore_permissions=True)\n		\n	def get_integration_status(self):\n		\"\"\"Get status of all integrations\"\"\"\n		status = {\n			\"drive\": \"Not Connected\",\n			\"accounting\": \"Not Connected\",\n			\"overall\": \"Incomplete\"\n		}\n		\n		# Check Drive Integration\n		drive_integration = frappe.db.get_value(\"Drive Integration\", \n			{\"customer\": self.name}, [\"integration_status\", \"setup_completed\"])\n		if drive_integration:\n			status[\"drive\"] = drive_integration[0] if drive_integration[1] else \"Setup Required\"\n			\n		# Check Accounting Integration\n		accounting_integration = frappe.db.get_value(\"Accounting Integration\",\n			{\"customer\": self.name}, [\"integration_status\"])\n		if accounting_integration:\n			status[\"accounting\"] = accounting_integration[0]\n			\n		# Determine overall status\n		if status[\"drive\"] == \"Active\" and status[\"accounting\"] == \"Connected\":\n			status[\"overall\"] = \"Complete\"\n		elif status[\"drive\"] in [\"Active\", \"Setup Required\"] or status[\"accounting\"] in [\"Connected\", \"Setup Required\"]:\n			status[\"overall\"] = \"Partial\"\n			\n		return status\n		\n	def get_recent_jobs(self, limit=10):\n		\"\"\"Get recent processing jobs\"\"\"\n		return frappe.get_all(\"Processing Job\",\n			filters={\"customer\": self.name},\n			fields=[\"name\", \"file_name\", \"processing_status\", \"completed_at\", \"extraction_engine\"],\n			order_by=\"creation desc\",\n			limit=limit\n		)\n		\n	def get_monthly_stats(self):\n		\"\"\"Get monthly processing statistics\"\"\"\n		from frappe.utils import get_first_day, get_last_day\n		\n		start_date = get_first_day(today())\n		end_date = get_last_day(today())\n		\n		stats = frappe.db.sql(\"\"\"\n			SELECT \n				COUNT(*) as total_jobs,\n				SUM(CASE WHEN processing_status = 'Completed' THEN 1 ELSE 0 END) as successful,\n				SUM(CASE WHEN processing_status = 'Failed' THEN 1 ELSE 0 END) as failed,\n				AVG(processing_time) as avg_processing_time\n			FROM `tabProcessing Job`\n			WHERE customer = %s AND DATE(creation) BETWEEN %s AND %s\n		\"\"\", (self.name, start_date, end_date), as_dict=1)\n		\n		return stats[0] if stats else {\n			\"total_jobs\": 0, \"successful\": 0, \"failed\": 0, \"avg_processing_time\": 0\n		}\n		\n\n@frappe.whitelist()\ndef get_customer_dashboard_data(customer_name=None):\n	\"\"\"API endpoint for customer dashboard data\"\"\"\n	if not customer_name:\n		# Get customer by current user email\n		customer_name = frappe.db.get_value(\"SaaS Customer\", {\"email\": frappe.session.user}, \"name\")\n		\n	if not customer_name:\n		frappe.throw(\"Customer not found\")\n		\n	customer = frappe.get_doc(\"SaaS Customer\", customer_name)\n	\n	# Check permissions\n	if frappe.session.user != customer.email and not frappe.has_permission(\"SaaS Customer\", \"read\", customer_name):\n		frappe.throw(\"Not permitted\")\n		\n	return {\n		\"customer_info\": {\n			\"name\": customer.customer_name,\n			\"email\": customer.email,\n			\"subscription_plan\": customer.subscription_plan,\n			\"subscription_status\": customer.subscription_status,\n			\"trial_end_date\": customer.trial_end_date,\n			\"current_usage\": customer.current_usage,\n			\"usage_limit\": customer.usage_limit,\n			\"usage_percentage\": (customer.current_usage / customer.usage_limit * 100) if customer.usage_limit else 0\n		},\n		\"integration_status\": customer.get_integration_status(),\n		\"recent_jobs\": customer.get_recent_jobs(),\n		\"monthly_stats\": customer.get_monthly_stats()\n	}\n	\n\n@frappe.whitelist()\ndef check_quota_available(folder_id):\n	\"\"\"API endpoint for n8n to check if customer has quota available\"\"\"\n	# Get customer by drive folder\n	customer_name = frappe.db.get_value(\"Drive Integration\", {\"drive_folder_id\": folder_id}, \"customer\")\n	\n	if not customer_name:\n		return {\"quota_available\": False, \"error\": \"Customer not found\"}\n		\n	customer = frappe.get_doc(\"SaaS Customer\", customer_name)\n	\n	# Check subscription status\n	if customer.subscription_status not in [\"Active\", \"Trial\"]:\n		return {\"quota_available\": False, \"error\": \"Subscription inactive\"}\n		\n	# Check quota\n	quota_available = customer.current_usage < customer.usage_limit or customer.overage_allowed\n	\n	return {\n		\"quota_available\": quota_available,\n		\"current_usage\": customer.current_usage,\n		\"usage_limit\": customer.usage_limit,\n		\"customer_name\": customer.customer_name,\n		\"subscription_status\": customer.subscription_status\n	}"
+				frappe.throw("Monthly processing quota exceeded. Please upgrade your plan.")
+			return False
+		return True
+		
+	def increment_usage(self):
+		"""Increment current usage counter"""
+		self.current_usage = (self.current_usage or 0) + 1
+		self.total_processed = (self.total_processed or 0) + 1
+		self.last_activity = frappe.utils.now()
+		self.save(ignore_permissions=True)
+		
+		# Check if approaching limit
+		usage_percentage = (self.current_usage / self.usage_limit) * 100
+		if usage_percentage >= 80 and usage_percentage < 85:
+			self.send_usage_warning(80)
+		elif usage_percentage >= 90 and usage_percentage < 95:
+			self.send_usage_warning(90)
+		elif usage_percentage >= 100:
+			self.send_usage_warning(100)
+			
+	def send_usage_warning(self, percentage):
+		"""Send usage warning email"""
+		try:
+			subject = f"Usage Alert: {percentage}% of quota used"
+			if percentage >= 100:
+				subject = "Quota Exceeded - Action Required"
+				
+			frappe.sendmail(
+				recipients=[self.email],
+				subject=subject,
+				template="usage_warning",
+				args={
+					"customer_name": self.customer_name,
+					"current_usage": self.current_usage,
+					"usage_limit": self.usage_limit,
+					"percentage": percentage,
+					"upgrade_url": f"{frappe.utils.get_url()}/billing"
+				}
+			)
+		except Exception as e:
+			frappe.log_error(f"Failed to send usage warning to {self.email}: {str(e)}")
+			
+	def reset_monthly_usage(self):
+		"""Reset monthly usage counter (called by scheduled job)"""
+		self.current_usage = 0
+		self.save(ignore_permissions=True)
+		
+	def get_integration_status(self):
+		"""Get status of all integrations"""
+		status = {
+			"drive": "Not Connected",
+			"accounting": "Not Connected",
+			"overall": "Incomplete"
+		}
+		
+		# Check Drive Integration
+		drive_integration = frappe.db.get_value("Drive Integration", 
+			{"customer": self.name}, ["integration_status", "setup_completed"])
+		if drive_integration:
+			status["drive"] = drive_integration[0] if drive_integration[1] else "Setup Required"
+			
+		# Check Accounting Integration
+		accounting_integration = frappe.db.get_value("Accounting Integration",
+			{"customer": self.name}, ["integration_status"])
+		if accounting_integration:
+			status["accounting"] = accounting_integration[0]
+			
+		# Determine overall status
+		if status["drive"] == "Active" and status["accounting"] == "Connected":
+			status["overall"] = "Complete"
+		elif status["drive"] in ["Active", "Setup Required"] or status["accounting"] in ["Connected", "Setup Required"]:
+			status["overall"] = "Partial"
+			
+		return status
+		
+	def get_recent_jobs(self, limit=10):
+		"""Get recent processing jobs"""
+		return frappe.get_all("Processing Job",
+			filters={"customer": self.name},
+			fields=["name", "file_name", "processing_status", "completed_at", "extraction_engine"],
+			order_by="creation desc",
+			limit=limit
+		)
+		
+	def get_monthly_stats(self):
+		"""Get monthly processing statistics"""
+		from frappe.utils import get_first_day, get_last_day
+		
+		start_date = get_first_day(today())
+		end_date = get_last_day(today())
+		
+		stats = frappe.db.sql("""
+			SELECT 
+				COUNT(*) as total_jobs,
+				SUM(CASE WHEN processing_status = 'Completed' THEN 1 ELSE 0 END) as successful,
+				SUM(CASE WHEN processing_status = 'Failed' THEN 1 ELSE 0 END) as failed,
+				AVG(processing_time) as avg_processing_time
+			FROM `tabProcessing Job`
+			WHERE customer = %s AND DATE(creation) BETWEEN %s AND %s
+		""", (self.name, start_date, end_date), as_dict=1)
+		
+		return stats[0] if stats else {
+			"total_jobs": 0, "successful": 0, "failed": 0, "avg_processing_time": 0
+		}
+		
+
+@frappe.whitelist()
+def get_customer_dashboard_data(customer_name=None):
+	"""API endpoint for customer dashboard data"""
+	if not customer_name:
+		# Get customer by current user email
+		customer_name = frappe.db.get_value("SaaS Customer", {"email": frappe.session.user}, "name")
+		
+	if not customer_name:
+		frappe.throw("Customer not found")
+		
+	customer = frappe.get_doc("SaaS Customer", customer_name)
+	
+	# Check permissions
+	if frappe.session.user != customer.email and not frappe.has_permission("SaaS Customer", "read", customer_name):
+		frappe.throw("Not permitted")
+		
+	return {
+		"customer_info": {
+			"name": customer.customer_name,
+			"email": customer.email,
+			"subscription_plan": customer.subscription_plan,
+			"subscription_status": customer.subscription_status,
+			"trial_end_date": customer.trial_end_date,
+			"current_usage": customer.current_usage,
+			"usage_limit": customer.usage_limit,
+			"usage_percentage": (customer.current_usage / customer.usage_limit * 100) if customer.usage_limit else 0
+		},
+		"integration_status": customer.get_integration_status(),
+		"recent_jobs": customer.get_recent_jobs(),
+		"monthly_stats": customer.get_monthly_stats()
+	}
+	
+
+@frappe.whitelist()
+def check_quota_available(folder_id):
+	"""API endpoint for n8n to check if customer has quota available"""
+	# Get customer by drive folder
+	customer_name = frappe.db.get_value("Drive Integration", {"drive_folder_id": folder_id}, "customer")
+	
+	if not customer_name:
+		return {"quota_available": False, "error": "Customer not found"}
+		
+	customer = frappe.get_doc("SaaS Customer", customer_name)
+	
+	# Check subscription status
+	if customer.subscription_status not in ["Active", "Trial"]:
+		return {"quota_available": False, "error": "Subscription inactive"}
+		
+	# Check quota
+	quota_available = customer.current_usage < customer.usage_limit or customer.overage_allowed
+	
+	return {
+		"quota_available": quota_available,
+		"current_usage": customer.current_usage,
+		"usage_limit": customer.usage_limit,
+		"customer_name": customer.customer_name,
+		"subscription_status": customer.subscription_status
+	}
